@@ -1,7 +1,7 @@
 # AWS Glacier Concurrent Deleter (AGCD)
 This utility will delete AWS archive files from a glacier vault. It is concurrent by design, and can be customized to maximize throughput on your hardware.
 
-## requirements
+## Requirements
   * A practical understanding of AWS Glacier
   * python3 (tested on 3.9.9)
   * [aws cli configured with the correct access key and secret for your vault](https://docs.aws.amazon.com/cli/latest/reference/configure/index.html)
