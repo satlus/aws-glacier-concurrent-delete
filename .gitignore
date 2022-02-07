@@ -1,0 +1,6 @@
+logs/*
+*.log
+output.json
+output copy.json
+__pycache__
+
