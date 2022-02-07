@@ -18,6 +18,7 @@ config.read('agcd.cfg')
 @dataclass
 class AGCDConfig:
     dry_run: bool
+    archive_inventory_filename: str
     thread_pool_runtime: dict
     thread_pool_worker_delay_ms: int 
     thread_pool_max_workers: int
@@ -29,6 +30,7 @@ class AGCDConfig:
 
 agcd_config = AGCDConfig(
             dry_run=True if config['DEFAULT']['dry_run'].lower().strip() == 'true' else False,
+            archive_inventory_filename=config['DEFAULT']['archive_inventory_filename'],
             thread_pool_runtime={'futures': None, 'executor': None},
             thread_pool_worker_delay_ms=int(config['DEFAULT']['thread_pool_worker_delay_ms']),
             thread_pool_max_workers=int(config['DEFAULT']['thread_pool_max_workers']),
@@ -42,7 +44,7 @@ time_stamp = datetime.now()
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
-    filename=time_stamp.strftime('agcd-%m-%d-%Y_%H:%M:%S.log'))
+    filename=time_stamp.strftime('logs/agcd-%m-%d-%Y_%H:%M:%S.log'))
 logging.getLogger().setLevel(agcd_config.logging_level)
 
 
@@ -106,7 +108,7 @@ def main():
             f'first sublist record is {archive_sublist[0]}, sublist length is {len(archive_sublist)}, parent list length is {len(archive_list)}')
         parallel_archive_delete(archive_sublist)
     else:
-      parallel_archive_delete(archive_list) 
+      parallel_archive_delete(archive_list)
 
 if __name__ == '__main__':
     main()

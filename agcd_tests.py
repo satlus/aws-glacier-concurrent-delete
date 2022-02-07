@@ -12,13 +12,14 @@ class TestAGCD(unittest.TestCase):
 
     def test_load_config_file(self):
         self.assertEqual(
-            self.default_configparser['thread_pool_worker_delay_ms'], '600')
+            self.default_configparser['thread_pool_worker_delay_ms'], '500')
 
     def test_config_dataclass(self):
-        self.assertEqual(True, self.agcd_config.dry_run)
+        self.assertEqual(False, self.agcd_config.dry_run)
+        self.assertEqual('output.json' ,self.agcd_config.archive_inventory_filename)
         self.assertIsInstance(self.agcd_config.thread_pool_runtime['executor'], ThreadPoolExecutor)
-        self.assertEqual(600, self.agcd_config.thread_pool_worker_delay_ms)
-        self.assertEqual(10, self.agcd_config.thread_pool_max_workers)
+        self.assertEqual(500, self.agcd_config.thread_pool_worker_delay_ms)
+        self.assertEqual(30, self.agcd_config.thread_pool_max_workers)
         self.assertEqual('agcd', self.agcd_config.thread_name_prefix)
         self.assertEqual('INFO' , self.agcd_config.logging_level)
         #self.assertEqual('', self.agcd_config.resume_from_archive_id)
