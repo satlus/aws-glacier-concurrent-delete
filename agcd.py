@@ -68,7 +68,7 @@ DELETE_CMD = Template(
     'aws glacier delete-archive --vault-name $vault_name --account-id - --archive-id="$archive_id"')
 
 DELETE_DRY_RUN_CMD = Template(
-    'echoo aws glacier delete-archive --vault-name $vault_name --account-id - --archive-id="$archive_id"')
+    'echo aws glacier delete-archive --vault-name $vault_name --account-id - --archive-id="$archive_id"')
 
 
 def delete_command(archive_id, index):
@@ -106,8 +106,7 @@ def main():
             f'first sublist record is {archive_sublist[0]}, sublist length is {len(archive_sublist)}, parent list length is {len(archive_list)}')
         parallel_archive_delete(archive_sublist)
     else:
-      parallel_archive_delete(archive_list)
-
+      parallel_archive_delete(archive_list) 
 
 if __name__ == '__main__':
     main()
