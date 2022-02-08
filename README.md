@@ -1,7 +1,7 @@
 # AWS Glacier Concurrent Deleter (AGCD)
 This utility will concurrently delete AWS archive files from a glacier vault. It can be customized to maximize throughput on your hardware.
 
-On an 8-core Ryzen 5800 running Windows10 21H2, 32GBRAM with a threadpool size of 40 workers and a 500ms delay, 52000 archives were deleted in just under an hour (about 15/sec). This was a greater than 10x improvement vs single threaded performance and shrank the time from 31hrs to 2. YMMV.
+On an 8-core Ryzen 5800 running Windows10 21H2, 32GBRAM with a threadpool size of 40 workers and a 500ms delay, 52000 archives were deleted in just under an hour (about 15/sec). This was a greater than 10x improvement vs single threaded performance and shrank the deletion time 100,000+ archives from 31hrs to 2. YMMV.
 
 ## Requirements
   * A practical understanding of AWS Glacier
