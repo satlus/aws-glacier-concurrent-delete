@@ -1,4 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
+from types import NoneType
 import unittest
 
 import agcd
@@ -19,11 +20,11 @@ class TestAGCD(unittest.TestCase):
         self.assertEqual('output.json' ,self.agcd_config.archive_inventory_filename)
         self.assertIsInstance(self.agcd_config.thread_pool_runtime['executor'], ThreadPoolExecutor)
         self.assertEqual(500, self.agcd_config.thread_pool_worker_delay_ms)
-        self.assertEqual(30, self.agcd_config.thread_pool_max_workers)
+        self.assertEqual(40, self.agcd_config.thread_pool_max_workers)
         self.assertEqual('agcd', self.agcd_config.thread_name_prefix)
         self.assertEqual('INFO' , self.agcd_config.logging_level)
         #self.assertEqual('', self.agcd_config.resume_from_archive_id)
-        self.assertEqual('jcnas_0011321CEF38_2', self.agcd_config.vault_name)
+        #self.assertEqual('jcnas_0011321CEF38_2', self.agcd_config.vault_name)
     
 if __name__ == '__main__':
     unittest.main()
