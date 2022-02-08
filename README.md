@@ -1,9 +1,11 @@
 # AWS Glacier Concurrent Deleter (AGCD)
-This utility will delete AWS archive files from a glacier vault. It is concurrent by design, and can be customized to maximize throughput on your hardware.
+This utility will concurrently delete AWS archive files from a glacier vault. It can be customized to maximize throughput on your hardware.
+
+On an 8-core Ryzen 5800 running Windows10 21H2, 32GBRAM with a threadpool size of 40 workers and a 500ms delay, 52000 archives were deleted in just under an hour (about 15/sec). This was a greater than 10x improvement vs single threaded performance and shrank the time from 31hrs to 2. YMMV.
 
 ## Requirements
   * A practical understanding of AWS Glacier
-  * python3 (tested on 3.9.9)
+  * python3 (tested on >=3.9.9)
   * [aws cli configured with the correct access key and secret for your vault](https://docs.aws.amazon.com/cli/latest/reference/configure/index.html)
   * An archive inventory json file
 
@@ -12,12 +14,12 @@ This utility will delete AWS archive files from a glacier vault. It is concurren
   * Ability to resume delete operations from a specific ArchiveID (recover from failure)
 
 ## Limitations
-  * Does not run the inventory retrieval job (you must do that first)
+  * Does not run the inventory retrieval job [(you must do this first)](https://docs.aws.amazon.com/amazonglacier/latest/dev/deleting-vaults-cli.html)
 
 ## Usage
 ### First Run
 1. Ensure your aws cli is properly configured to connect to your vault
-1. [Run the archive inventory job via the aws cli to produce a list of archives in a json file](https://docs.aws.amazon.com/amazonglacier/latest/dev/deleting-vaults-cli.html) (this can take up to 5hrs)
+1. [If you haven't already, run the archive inventory job via the aws cli to produce a list of archives in a json file](https://docs.aws.amazon.com/amazonglacier/latest/dev/deleting-vaults-cli.html) (this can take up to 5hrs)
 1. Edit [agcd.cfg](./agcd.cfg)
 
 ```
@@ -48,9 +50,11 @@ If for some reason you have a failure during processing you can start where you 
 ```
 resume_from_archive_id=jA3EDhIk0H33Aelwu53lZheKATMK9HnHHPWJ9QIS3fOThtmod0nTntSuo7FUVexRsKAkrR4P53wcYueekv3ULN3z-qn_3dtXeGZrpT8Fu5XBHpTnNthEphNwmXedMhish6UoQgGlVg
 ```
-4. Run the program, it will resume from the location of this archive id
+4. Run the program, it will resume from the location of the archive id set in the configuration
 
 ### DryRun
 Setting `dry_run = true` will echo the aws cli commands in the shell - useful for debugging.
 
 ## Roadmap
+  * make the log directory configurable
+  * investigate the boto3 API, move away from the CLI

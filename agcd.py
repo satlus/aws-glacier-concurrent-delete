@@ -44,7 +44,7 @@ time_stamp = datetime.now()
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
-    filename=time_stamp.strftime('logs/agcd-%m-%d-%Y_%H:%M:%S.log'))
+    filename=time_stamp.strftime('./logs/agcd-%m-%d-%Y_%H-%M-%S.log'))
 logging.getLogger().setLevel(agcd_config.logging_level)
 
 
